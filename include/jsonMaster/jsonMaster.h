@@ -1,12 +1,11 @@
 #include <iostream>
-#include <fstream>
+
 #include <map>
 #include <string>
-#include <sstream>
 #include <stdexcept>
 #include <optional>
 #include <variant>
-#include <iomanip>
+
 
 namespace myjson {
 
@@ -16,6 +15,9 @@ namespace myjson {
     private:
         std::string filename;
         std::map<std::string, JsonValue> data;
+
+        // Проверка существования файла
+        bool fileExists() const;
 
         // Чтение JSON-файла и загрузка данных в память
         void load();

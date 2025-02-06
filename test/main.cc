@@ -3,7 +3,7 @@
 
 int main() {
     std::cout << "Hello, World!\n";
-    myjson::JsonMaster jsonFile("data.json");
+    myjson::JsonMaster jsonFile("data_file.json");
 
     // Записываем значения, если их еще нет
     jsonFile.writeIfNotExists("name", std::string("John"));

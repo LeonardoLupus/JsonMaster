@@ -1,7 +1,16 @@
-#include <jsonMaster/jsonMaster.h> 
+#include <jsonMaster/jsonMaster.h>
 
+
+#include <sstream>
+#include <fstream>
+#include <iomanip>
+#include <filesystem>
 
 namespace myjson {
+
+bool JsonMaster::fileExists() const {
+    return std::filesystem::exists(filename);
+}
 
 void JsonMaster::load() {
     std::ifstream file(filename);
@@ -83,8 +92,19 @@ void JsonMaster::save() {
     file << "\n}\n";    
 }
 
+
+
 JsonMaster::JsonMaster(const std::string& filename) : filename(filename) {
-    load();
+    if (fileExists()) {
+        load(); // Загружаем данные, если файл существует
+    } else {
+        // Создаем пустой файл
+        std::ofstream file(filename);
+        if (!file.is_open()) {
+            throw std::runtime_error("Failed to create file: " + filename);
+        }
+        file << "{}"; // Инициализируем файл пустым JSON-объектом
+    }
 }
 
 void JsonMaster::writeIfNotExists(const std::string& key, const JsonValue& value) {
